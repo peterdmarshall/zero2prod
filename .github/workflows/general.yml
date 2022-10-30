@@ -87,13 +87,6 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: test
-      - name: Compute test coverage
-        run: |
-          cargo tarpaulin --ignore-tests --verbose --workspace --timeout 120 --out Xml
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   fmt:
     name: Rustfmt
@@ -222,4 +215,8 @@ jobs:
       - name: Run cargo-tarpaulin
         uses: actions-rs/tarpaulin@v0.1
         with:
-          args: '--ignore-tests --avoid-cfg-tarpaulin'
+          args: '--ignore-tests --avoid-cfg-tarpaulin --out Xml'
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
